@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ShadowT3ch Admin</title>
+  <style>
+    body {
+      background:#0b0b0b;
+      color:#fff;
+      font-family:Arial;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+    }
+    .box {
+      background:#111;
+      padding:25px;
+      border-radius:10px;
+      width:420px;
+    }
+    input, textarea, button {
+      width:100%;
+      margin-top:10px;
+      padding:10px;
+      background:#1a1a1a;
+      color:#fff;
+      border:none;
+      border-radius:6px;
+    }
+    textarea { height:150px; resize:none; }
+    button { background:#2563eb; cursor:pointer; font-weight:bold; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>ShadowT3ch Admin</h2>
+  <input id="secret" type="password" placeholder="Admin Secret">
+  <textarea id="src" placeholder="Paste Lua source"></textarea>
+  <button onclick="save()">Encrypt & Save</button>
+  <p id="status"></p>
+</div>
+
+<script>
+async function save() {
+  const secret = document.getElementById("secret").value;
+  const src = document.getElementById("src").value;
+  const status = document.getElementById("status");
+
+  if (!secret || !src) {
+    status.textContent = "Missing secret or source";
+    return;
+  }
+
+  const res = await fetch("https://load.shadowt3ch.com/admin/update", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": secret
+    },
+    body: JSON.stringify({ src })
+  });
+
+  status.textContent = res.ok ? "Encrypted & stored" : "Denied";
+}
+</script>
+
+</body>
+</html>
