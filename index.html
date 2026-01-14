@@ -1,69 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ShadowT3ch Admin</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Latiese 💕</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
     body {
-      background:#0b0b0b;
-      color:#fff;
-      font-family:Arial;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      height:100vh;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(120deg, #f8cdda, #fbc2eb);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .box {
-      background:#111;
-      padding:25px;
-      border-radius:10px;
-      width:420px;
+
+    .mist {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,192,203,0.4) 0%, transparent 60%);
+        animation: mistMove 20s linear infinite;
     }
-    input, textarea, button {
-      width:100%;
-      margin-top:10px;
-      padding:10px;
-      background:#1a1a1a;
-      color:#fff;
-      border:none;
-      border-radius:6px;
+
+    @keyframes mistMove {
+        0% { transform: translate(-20%, -20%); }
+        50% { transform: translate(0%, 0%); }
+        100% { transform: translate(-20%, -20%); }
     }
-    textarea { height:150px; resize:none; }
-    button { background:#2563eb; cursor:pointer; font-weight:bold; }
-  </style>
+
+    .container {
+        position: relative;
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(15px);
+        padding: 40px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 0 40px rgba(255,105,180,0.4);
+        z-index: 2;
+    }
+
+    h1 {
+        color: #ff4f9a;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #ff5fa2;
+        margin-bottom: 25px;
+        font-size: 1.1rem;
+    }
+
+    button {
+        background: linear-gradient(135deg, #ff5fa2, #ff85c1);
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 0 20px rgba(255,105,180,0.6);
+        transition: transform 0.2s ease;
+    }
+
+    button:hover {
+        transform: scale(1.08);
+    }
+
+    .counter {
+        margin-top: 15px;
+        color: #ff4f9a;
+        font-size: 1.2rem;
+    }
+
+    .heart {
+        position: absolute;
+        color: rgba(255,105,180,0.7);
+        font-size: 20px;
+        animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(100vh) scale(0.8);
+            opacity: 0;
+        }
+        20% { opacity: 1; }
+        100% {
+            transform: translateY(-10vh) scale(1.2);
+            opacity: 0;
+        }
+    }
+</style>
 </head>
+
 <body>
 
-<div class="box">
-  <h2>ShadowT3ch Admin</h2>
-  <input id="secret" type="password" placeholder="Admin Secret">
-  <textarea id="src" placeholder="Paste Lua source"></textarea>
-  <button onclick="save()">Encrypt & Save</button>
-  <p id="status"></p>
+<div class="mist"></div>
+
+<div class="container">
+    <h1>For Latiese 💖</h1>
+    <p>You are loved more than words can explain.</p>
+    <button onclick="addHeart()">Send Love 💕</button>
+    <div class="counter">Hearts sent: <span id="count">0</span> 💗</div>
 </div>
 
 <script>
-async function save() {
-  const secret = document.getElementById("secret").value;
-  const src = document.getElementById("src").value;
-  const status = document.getElementById("status");
+    let count = 0;
 
-  if (!secret || !src) {
-    status.textContent = "Missing secret or source";
-    return;
-  }
+    function addHeart() {
+        count++;
+        document.getElementById("count").innerText = count;
 
-  const res = await fetch("https://load.shadowt3ch.com/admin/update", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": secret
-    },
-    body: JSON.stringify({ src })
-  });
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (6 + Math.random() * 4) + "s";
 
-  status.textContent = res.ok ? "Encrypted & stored" : "Denied";
-}
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 10000);
+    }
+
+    // background floating hearts
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💗";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (7 + Math.random() * 5) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 12000);
+    }, 700);
 </script>
 
 </body>
