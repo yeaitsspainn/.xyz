@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  username        String   @unique
+  email           String   @unique
+  password        String
+  role            String   @default("user") // user | admin | owner
+  discordId       String?  @unique
+  discordVerified Boolean  @default(false)
+  hwid            String?
+  banned          Boolean  @default(false)
+  banReason       String?
+  createdAt       DateTime @default(now())
+  scripts         Script[]
+  logs            Log[]
+}
+
+model Script {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  code        String
+  views       Int      @default(0)
+  likes       Int      @default(0)
+  downloads   Int      @default(0)
+  score       Int      @default(0)
+  ownerId     Int
+  owner       User     @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  type      String
+  details   String?
+  ip        String?
+  userId    Int?
+  createdAt DateTime @default(now())
+}
